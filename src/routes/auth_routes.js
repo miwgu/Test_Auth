@@ -47,13 +47,18 @@ const isValidUser = (email, password) => {
 };
 */
 
-// I rewrit code 
-
+// I need two type of users,Admin and User to log in this app
 const users =[
   {email:"user@example.com", password:"password"},
+  {email:"miwa@example.com", password:"password"},
   {email:"admin@example.com", password:"password"},
 ]
 
+ /**
+  * Function isValidUser: to login
+  * @param {*} email, password 
+  * @returns true or false
+  */
 const isValidUser =(email,password )=>{
  for (const user of users) {
       if(user.email ===email&& user.password===password ){
@@ -63,6 +68,11 @@ const isValidUser =(email,password )=>{
         return false;
 };
 
+ /**
+  * Function getUserRole: to determin login-users role
+  * @param {*} email 
+  * @returns 'admin' or 'user'
+  */
 const getUserRole = (email) => {
   return email === 'admin@example.com' ? 'admin' : 'user';
 };
