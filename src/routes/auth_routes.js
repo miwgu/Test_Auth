@@ -3,12 +3,13 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
 const router = express.Router();
-const secretKey_crypto = crypto.randomBytes(32).toString('base64');
+// I do not need to use this because I use SECRET_KEY in .env
+//const secretKey_crypto = crypto.randomBytes(32).toString('base64');
 
 //Use .env This file should not upload to github(.gitignore) This .env file is a secret file in our group5
-const secretKey = process.env.SECRET_KEY || secretKey_crypto;
+const secretKey = process.env.SECRET_KEY;
 
-console.log(`Generated secretKey: ${secretKey}`);
+console.log(`SecretKey: ${secretKey}`);
 
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
@@ -29,15 +30,37 @@ router.post('/login', (req, res) => {
   if (isValidUser(email, password)) {
     token
     res.json({ token });
+    console.log('Login Successful :)');
   } else {
     res.status(401).json({ error: 'Invalid login' });
+    console.log('Invalid email or password');
   }
+  
+  
 });
 
 
-
+/*
+//This is original code
 const isValidUser = (email, password) => {
   return email === 'user@example.com' && password === 'password';
+};
+*/
+
+// I rewrit code 
+
+const users =[
+  {email:"user@example.com", password:"password"},
+  {email:"admin@example.com", password:"password"},
+]
+
+const isValidUser =(email,password )=>{
+ for (const user of users) {
+      if(user.email ===email&& user.password===password ){
+        return true;
+     }
+  }
+        return false;
 };
 
 const getUserRole = (email) => {
